@@ -82,6 +82,9 @@ app.get('/ics/:service', (req, res, next) => {
     }
 })
 
+app.get('/', (req, res) => {
+    res.redirect('https://github.com/ahnl/ical-ruokalista');
+});
 app.listen((process.env.PORT || 80), () => {
     logger.info('[HTTP] Server ready!');
 });
