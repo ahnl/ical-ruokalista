@@ -82,6 +82,6 @@ app.get('/ics/:service', (req, res, next) => {
     }
 })
 
-app.listen(80, () => {
+app.listen((process.env.PORT || 80), () => {
     logger.info('[HTTP] Server ready!');
 });
