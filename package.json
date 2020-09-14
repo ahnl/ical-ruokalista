@@ -1,0 +1,27 @@
+{
+  "name": "ical-ruokalista",
+  "version": "1.0.0",
+  "description": "NodeJS palvelin, joka kääntää koulujen ruokalistat iCalendar-muotoon.",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "got": "^11.6.2",
+    "ical-generator": "^1.15.0",
+    "logdna-winston": "^2.3.2",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahnl/ical-ruokalista.git"
+  },
+  "author": "ahnl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ahnl/ical-ruokalista/issues"
+  },
+  "homepage": "https://github.com/ahnl/ical-ruokalista#readme"
+}
