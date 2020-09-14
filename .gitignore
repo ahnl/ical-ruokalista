@@ -3,3 +3,4 @@ ngrok.exe
 output.cal
 output.ics
 temp.json
+*.log
