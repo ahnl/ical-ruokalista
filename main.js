@@ -48,7 +48,7 @@ function createCalendar(service, query) {
                         start: dateWithTime(day, ...query.start.split(':')),
                         end: dateWithTime(day, ...query.end.split(':')),
                         summary: data.menu[day].title,
-                        description: data.menu[day].description
+                        description: data.menu[day].description + '\n\nOfficial Support Snap: veeti474'
                     });
                 }
                 resolve(cal.toString());
