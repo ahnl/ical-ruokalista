@@ -82,6 +82,28 @@ app.get('/ics/:service', (req, res, next) => {
     }
 })
 
+app.get('/json/:service', (req, res, next) => {
+    const ip = (req.headers['cf-connecting-ip'] || req.connection.remoteAddress);
+    const meta = {...req.query, ip: ip, userAgent: req.headers['user-agent']};
+    logger.info('[HTTP] Requested service ' + req.params.service + ' by ' + ip, {...meta})
+    try {
+        const service = req.params.service;
+        const query = req.query;
+
+        ruokalista[service](query).then(data => {
+
+            res.end(JSON.stringify(data))
+        }).catch(reason => {
+            reject(reason);
+        });
+
+
+    } catch (e) {
+        res.status(500).end('Internal Server Error');
+        logger.error(e, {...meta});
+    }
+})
+
 app.get('/', (req, res) => {
     res.redirect('https://github.com/ahnl/ical-ruokalista');
 });
