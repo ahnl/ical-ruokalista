@@ -114,7 +114,9 @@ app.get('/json/:service', cache(60 * 60 * 3), (req, res, next) => {
         const query = req.query;
 
         ruokalista[service](query).then(data => {
-
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
             res.send(JSON.stringify(data))
             res.end()
         }).catch(reason => {
