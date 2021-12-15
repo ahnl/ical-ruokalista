@@ -93,7 +93,8 @@ app.get('/ics/:service', cache(60 * 60 * 3), (req, res, next) => {
                 'Content-Type': 'text/calendar; charset=utf-8',
                 'Content-Disposition': 'attachment; filename="ical-ruokalista.ics"'
             });
-            res.end(ics, 'utf8');
+            res.send(ics, 'utf8');
+            res.end()
         }).catch(reason => {
             res.status(500).end('Bad Request');
             logger.error(reason, {...meta});
@@ -114,7 +115,8 @@ app.get('/json/:service', cache(60 * 60 * 3), (req, res, next) => {
 
         ruokalista[service](query).then(data => {
 
-            res.end(JSON.stringify(data))
+            res.send(JSON.stringify(data))
+            res.end()
         }).catch(reason => {
             reject(reason);
         });
