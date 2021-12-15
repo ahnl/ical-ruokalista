@@ -8,9 +8,9 @@
     "got": "^11.6.2",
     "ical-generator": "^1.15.0",
     "logdna-winston": "^2.3.2",
+    "memory-cache": "^0.2.0",
     "winston": "^3.3.3"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

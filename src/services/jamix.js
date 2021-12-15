@@ -3,6 +3,7 @@ const got = require('got');
 module.exports = function(params) {
     return new Promise( async (resolve, reject) => {
         try {
+            console.log("Querying Jamix Cloud...")
             let response = await got('http://fi.jamix.cloud/apps/menuservice/rest/haku/menu/' + params.customerID + '/' + params.kitchenID + '?lang=fi');
             response = JSON.parse(response.body);
             function jamixFormatDate(dt) {

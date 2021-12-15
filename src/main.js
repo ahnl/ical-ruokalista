@@ -1,12 +1,31 @@
 const ical = require('ical-generator');
 const express = require('express');
+const mcache = require('memory-cache');
 const app = express();
-const { dateWithTime } = require('./utils.js');
+const { dateWithTime } = require('../utils.js');
 const { createLogger, format, transports } = require('winston');
 const logdnaWinston = require('logdna-winston');
 
 const ruokalista = {
     "jamix": require('./services/jamix.js')
+}
+
+const cache = (duration) => {
+    return (req, res, next) => {
+        let key = '__express__' + req.originalUrl || req.url
+        let cachedBody = mcache.get(key)
+        if (cachedBody) {
+            res.send(cachedBody)
+            return
+        } else {
+            res.sendResponse = res.send
+            res.send = (body) => {
+                mcache.put(key, body, duration * 1000);
+                res.sendResponse(body)
+            }
+            next()
+        }
+    }
 }
 
 const logger = createLogger({
@@ -61,7 +80,7 @@ function createCalendar(service, query) {
     });
 }
 
-app.get('/ics/:service', (req, res, next) => {
+app.get('/ics/:service', cache(60 * 60 * 3), (req, res, next) => {
     const ip = (req.headers['cf-connecting-ip'] || req.connection.remoteAddress);
     const meta = {...req.query, ip: ip, userAgent: req.headers['user-agent']};
     logger.info('[HTTP] Requested service ' + req.params.service + ' by ' + ip, {...meta})
@@ -82,7 +101,7 @@ app.get('/ics/:service', (req, res, next) => {
     }
 })
 
-app.get('/json/:service', (req, res, next) => {
+app.get('/json/:service', cache(60 * 60 * 3), (req, res, next) => {
     const ip = (req.headers['cf-connecting-ip'] || req.connection.remoteAddress);
     const meta = {...req.query, ip: ip, userAgent: req.headers['user-agent']};
     logger.info('[HTTP] Requested service ' + req.params.service + ' by ' + ip, {...meta})
