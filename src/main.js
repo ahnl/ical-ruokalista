@@ -12,6 +12,7 @@ const ruokalista = {
 
 const cache = (duration) => {
     return (req, res, next) => {
+        console.log("Cache middleware run")
         let key = '__express__' + req.originalUrl || req.url
         let cachedBody = mcache.get(key)
         if (cachedBody) {
