@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+  ical-ruokalista:
+    image: ghcr.io/ahnl/ical-ruokalista
+    build:
+      context: .
+    restart: unless-stopped
+    container_name: "ical-ruokalista"
+    ports:
+      - 80:80
